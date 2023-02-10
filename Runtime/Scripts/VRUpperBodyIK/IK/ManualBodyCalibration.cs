@@ -14,6 +14,9 @@ namespace VRUpperBodyIK.IK
         [Tooltip("Input action that triggers calibration.")]
         public InputAction calibrateAction;
 
+        [Tooltip("Triggers a calibration after the specified number of seconds. Handy for playback of tracked data.")]
+        public float calibrateAfterSeconds = 0;
+
         private void Start()
         {
             if (calibrateAction != null)
@@ -35,6 +38,15 @@ namespace VRUpperBodyIK.IK
             if (context.performed)
             {
                 Calibrate();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (calibrateAfterSeconds > Mathf.Epsilon && Time.time > calibrateAfterSeconds)
+            {
+                Calibrate();
+                calibrateAfterSeconds = 0;
             }
         }
 

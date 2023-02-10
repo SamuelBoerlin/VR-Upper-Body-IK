@@ -432,6 +432,7 @@ MonoBehaviour:
   neckShoulderDistance: 0.17
   handElbowDistance: 0.42
   elbowShoulderDistance: 0.26
+  height: 0
 --- !u!114 &9068585278311481120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +494,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  calibrateAfterSeconds: 1
 --- !u!1 &7292149241988535317
 GameObject:
   m_ObjectHideFlags: 0
