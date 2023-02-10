@@ -12,6 +12,7 @@ namespace VRUpperBodyIK.IK
             bodySettings.NeckShoulderDistance = Settings.NeckShoulderDistance;
             bodySettings.HandElbowDistance = Settings.HandElbowDistance;
             bodySettings.ElbowShoulderDistance = Settings.ElbowShoulderDistance;
+            bodySettings.Height = Settings.Height;
         }
     }
 }

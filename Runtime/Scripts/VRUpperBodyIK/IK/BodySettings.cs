@@ -8,6 +8,8 @@
         public float HandElbowDistance { get; set; }
         public float ElbowShoulderDistance { get; set; }
 
+        public float Height { get; set; }
+
         public float ArmLength => HandElbowDistance + ElbowShoulderDistance;
     }
 }

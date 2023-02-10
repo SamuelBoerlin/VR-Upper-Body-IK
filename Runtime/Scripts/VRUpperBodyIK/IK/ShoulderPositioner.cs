@@ -28,7 +28,19 @@ namespace VRUpperBodyIK.IK
 
         private void PositionNeck(Skeleton.Pose pose, BodySettings bodySettings)
         {
-            neckPosition = pose.headPosition + pose.headRotation * Vector3.down * bodySettings.HeadNeckDistance;
+            Quaternion neckRotation = pose.headRotation;
+
+            if(bodySettings.Height > 0.1f)
+            {
+                float b = 0.333f;
+                float b0 = 135.3f;
+
+                float pitch = (bodySettings.Height - pose.headPosition.y) / bodySettings.Height * (b0 + b * pose.headRotation.eulerAngles.x);
+
+                neckRotation = Quaternion.AngleAxis(pose.headRotation.eulerAngles.y, Vector3.up) * Quaternion.AngleAxis(pitch, Vector3.right);
+            }
+
+            neckPosition = pose.headPosition + neckRotation * Vector3.down * bodySettings.HeadNeckDistance;
 
             RotateNeck(pose, neckPosition);
             ConstrainNeckToHead(pose);

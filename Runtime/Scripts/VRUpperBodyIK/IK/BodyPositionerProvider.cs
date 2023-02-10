@@ -8,6 +8,8 @@
         public float handElbowDistance = 0.42f;
         public float elbowShoulderDistance = 0.26f;
 
+        public float height = 0.0f;
+
         private readonly BodyPositioner bodyPositioner = new();
 
         public override Positioner Positioner => bodyPositioner;
@@ -28,6 +30,7 @@
             bodyPositioner.Settings.NeckShoulderDistance = neckShoulderDistance;
             bodyPositioner.Settings.HandElbowDistance = handElbowDistance;
             bodyPositioner.Settings.ElbowShoulderDistance = elbowShoulderDistance;
+            bodyPositioner.Settings.Height = height;
         }
     }
 }

@@ -45,6 +45,8 @@ namespace VRUpperBodyIK.IK
             var handToHandDistance = (pose.leftArm.handPosition - pose.rightArm.handPosition).magnitude;
 
             bodyPositioner.elbowShoulderDistance = bodyPositioner.handElbowDistance = (handToHandDistance - 2.0f * bodyPositioner.neckShoulderDistance) / 4.0f;
+
+            bodyPositioner.height = skeleton.head.position.y;
         }
     }
 }
