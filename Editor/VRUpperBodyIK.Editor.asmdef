@@ -1,0 +1,16 @@
+{
+    "name": "VRUpperBodyIK.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d673030d6f228374790cbee426ff1080"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,11 @@
+{
+  "name": "vr-upper-body-ik",
+  "version": "0.0.1",
+  "displayName": "VR Upper Body IK",
+  "description": "Assets for upper body inverse kinematics in virtual reality.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Samuel Börlin",
+    "email": "samuel.boerlin@unibas.ch"
+  }
+}
