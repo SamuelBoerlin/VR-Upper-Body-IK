@@ -78,6 +78,18 @@ namespace VRUpperBodyIK.IK
                 neckForwardDir *= -1.0f;
             }
 
+            var headForwardDir = pose.headRotation * Vector3.forward;
+            headForwardDir = new Vector3(headForwardDir.x, 0, headForwardDir.z).normalized;
+
+            // If neck forward and head forward are almost opposite
+            // then the neck rotation should almost certainly be flipped
+            if (Vector3.Dot(neckForwardDir, headForwardDir) < -0.9f)
+            {
+                flipNeckRotation = !flipNeckRotation;
+                neckForwardAngle += 180.0f;
+                neckForwardDir *= -1.0f;
+            }
+
             neckForwardAngle %= 360.0f;
         }
 
@@ -88,9 +100,12 @@ namespace VRUpperBodyIK.IK
 
             float headForwardAngle = Mathf.Atan2(headForwardDir.x, headForwardDir.z) * Mathf.Rad2Deg;
 
-            float neckHeadAngleDifference = Mathf.Abs((headForwardAngle + 360f) % 360f - (neckForwardAngle + 360f) % 360f);
+            static float unsigedModulo(float x, float n) => (x % n + n) % n;
 
-            float blend = 1.0f / (1.0f + Mathf.Exp((neckHeadAngleDifference - 105.0f) * 0.1f));
+            float neckHeadAngleDifference = headForwardAngle - neckForwardAngle;
+            neckHeadAngleDifference = unsigedModulo((neckHeadAngleDifference + 180.0f), 360.0f) - 180.0f;
+
+            float blend = 1.0f / (1.0f + Mathf.Exp((Mathf.Abs(neckHeadAngleDifference) - 105.0f) * 0.1f));
 
             if (Mathf.Abs(headForwardAngle - neckForwardAngle) > 180)
             {
