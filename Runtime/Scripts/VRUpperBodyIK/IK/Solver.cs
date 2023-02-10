@@ -7,33 +7,24 @@ namespace VRUpperBodyIK.IK
         [Tooltip("Skeleton to be solved with IK. Head and hand should already be positioned appropriately.")]
         public Skeleton.Skeleton skeleton;
 
-        public bool runSolver;
-
-        private ShoulderPositioner shoulderPositioner = new();
-
-        private ElbowPositioner leftElbowPositioner = new(true);
-        private ElbowPositioner rightElbowPositioner = new(false);
+        [Tooltip("Array of positioners that position the individual skeleton parts: Body Positioner Provider, Elbow Positioner Provider, Shoulder Positioner Provider.")]
+        public PositionerProviderBehaviour[] positioners;
 
         private void FixedUpdate()
         {
-            if (runSolver)
+            var pose = skeleton.CalibratedWorldPose;
+
+            var bodySettings = new BodySettings();
+
+            if(positioners != null)
             {
-                var pose = skeleton.CalibratedWorldPose;
-
-                var settings = new BodySettings();
-
-                settings.HeadNeckDistance = 0.18f;
-                settings.NeckShoulderDistance = 0.17f;
-                settings.HandElbowDistance = 0.42f;
-                settings.ElbowShoulderDistance = 0.26f;
-
-                shoulderPositioner.Update(pose, settings);
-
-                leftElbowPositioner.Update(pose, settings);
-                rightElbowPositioner.Update(pose, settings);
-
-                ApplyPoseToChain(pose);
+                foreach (PositionerProvider provider in positioners)
+                {
+                    provider.Positioner.Update(pose, bodySettings);
+                }
             }
+
+            ApplyPoseToChain(pose);
         }
 
         protected void ApplyPoseToChain(Skeleton.Pose pose)

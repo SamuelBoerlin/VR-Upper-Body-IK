@@ -328,6 +328,11 @@ GameObject:
   - component: {fileID: 5324071900703088196}
   - component: {fileID: 3681742733209405800}
   - component: {fileID: 709254487519314354}
+  - component: {fileID: 5542431443632101796}
+  - component: {fileID: 9068585278311481120}
+  - component: {fileID: 7128170600906817683}
+  - component: {fileID: 3762539203222740277}
+  - component: {fileID: 8537609578512043032}
   m_Layer: 0
   m_Name: Simulated
   m_TagString: Untagged
@@ -406,7 +411,88 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeleton: {fileID: 5324071900703088196}
-  runSolver: 1
+  positioners:
+  - {fileID: 5542431443632101796}
+  - {fileID: 9068585278311481120}
+  - {fileID: 7128170600906817683}
+  - {fileID: 3762539203222740277}
+--- !u!114 &5542431443632101796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fde26e4ebe5c8141a78aad537c27c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headNeckDistance: 0.18
+  neckShoulderDistance: 0.17
+  handElbowDistance: 0.42
+  elbowShoulderDistance: 0.26
+--- !u!114 &9068585278311481120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0acfe83a8b063640b6a0af0ca788004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7128170600906817683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef6cfbe4e20aaa46abeb8589f2fd2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLeftArm: 0
+--- !u!114 &3762539203222740277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef6cfbe4e20aaa46abeb8589f2fd2d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLeftArm: 1
+--- !u!114 &8537609578512043032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17f8493e7affc84b9e2adb0d82521e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeleton: {fileID: 5324071900703088196}
+  bodyPositioner: {fileID: 5542431443632101796}
+  calibrateAction:
+    m_Name: Calibrate
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 35e021be-e5ff-46a1-b4c0-5454c5676e52
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &7292149241988535317
 GameObject:
   m_ObjectHideFlags: 0
