@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 7128170600906817683}
   - component: {fileID: 3762539203222740277}
   - component: {fileID: 8537609578512043032}
+  - component: {fileID: 1643092724621213933}
   m_Layer: 0
   m_Name: Simulated
   m_TagString: Untagged
@@ -379,7 +380,7 @@ MonoBehaviour:
   rightElbow: {fileID: 7292149243508902210}
   rightHand: {fileID: 7292149242321348379}
   calibrationData: {fileID: 8992492810074633273}
-  drawUncalibratedSkeletonGizmos: 1
+  drawUncalibratedSkeletonGizmos: 0
   drawCalibratedSkeletonGizmos: 0
 --- !u!114 &3681742733209405800
 MonoBehaviour:
@@ -495,6 +496,20 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   calibrateAfterSeconds: 1
+--- !u!114 &1643092724621213933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292149241897245236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2941f4a0afcff5c478d7cf9379939861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 7646199335235651284, guid: 57ef6453f9c7a9440a7370f1c8655b56,
+    type: 3}
 --- !u!1 &7292149241988535317
 GameObject:
   m_ObjectHideFlags: 0
