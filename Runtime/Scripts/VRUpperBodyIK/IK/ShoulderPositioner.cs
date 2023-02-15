@@ -100,10 +100,7 @@ namespace VRUpperBodyIK.IK
 
             float headForwardAngle = Mathf.Atan2(headForwardDir.x, headForwardDir.z) * Mathf.Rad2Deg;
 
-            static float unsigedModulo(float x, float n) => (x % n + n) % n;
-
-            float neckHeadAngleDifference = headForwardAngle - neckForwardAngle;
-            neckHeadAngleDifference = unsigedModulo((neckHeadAngleDifference + 180.0f), 360.0f) - 180.0f;
+            float neckHeadAngleDifference = Mathf.DeltaAngle(neckForwardAngle, headForwardAngle);
 
             float blend = 1.0f / (1.0f + Mathf.Exp((Mathf.Abs(neckHeadAngleDifference) - 105.0f) * 0.1f));
 

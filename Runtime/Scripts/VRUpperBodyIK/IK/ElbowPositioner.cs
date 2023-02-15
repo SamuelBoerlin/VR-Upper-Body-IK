@@ -10,11 +10,13 @@ namespace VRUpperBodyIK.IK
         private Quaternion elbowRotation;
         private float elbowRadius;
 
-        private bool isLeftArm;
+        private readonly bool isLeftArm;
+        private readonly bool isRightArm;
 
         public ElbowPositioner(bool isLeftArm)
         {
             this.isLeftArm = isLeftArm;
+            this.isRightArm = !isLeftArm;
         }
 
         public void Update(Skeleton.Pose pose, BodySettings bodySettings)
@@ -163,59 +165,39 @@ namespace VRUpperBodyIK.IK
                 return elbowPosition;
             }
 
-            // TODO Clean this up
+            float elbowRelativeHandYaw = (isLeftArm ? 1 : -1) * Mathf.DeltaAngle(elbowRoll - (isLeftArm ? 1 : -1) * 90, arm.handRotation.eulerAngles.z);
+            float elbowRelativeHandPitch = Mathf.DeltaAngle(0.0f, arm.handRotation.eulerAngles.x);
 
-            //Debug.DrawRay(elbowPosition, elbowX * 0.25f, Color.red);
-            //Debug.DrawRay(elbowPosition, elbowY * 0.25f, Color.green);
-            //Debug.DrawRay(elbowPosition, elbowZ * 0.25f, Color.blue);*/
-
-            //Vector3 handUp = handRotation * Vector3.up;
-
-            //float x = Vector3.Dot(elbowY, handUp);
-            //float y = Vector3.Dot(-elbowX, handUp);
-
-            //Debug.DrawRay(handPosition, elbowY * x);
-            //Debug.DrawRay(handPosition, -elbowX * y);
-
-            //float handYaw = m * Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-
-            Quaternion elbowUp = Quaternion.LookRotation(elbowY, -elbowZ);
-            Quaternion handUp = Quaternion.LookRotation(arm.handRotation * Vector3.up, arm.handRotation * Vector3.back);
-            float handYaw = -m * (((Quaternion.Inverse(elbowUp) * handUp).eulerAngles.y + 180.0f) % 360.0f - 180.0f);
-
-            //Vector3 handForward = handRotation * Vector3.forward;
-
-            //float x = Vector3.Dot(elbowZ, handForward);
-            //float y = Vector3.Dot(elbowY, handForward);
-
-            //float handPitch = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-
-            Quaternion elbowForward = Quaternion.LookRotation(elbowZ, elbowY);
-            Quaternion handForward = Quaternion.LookRotation(arm.handRotation * Vector3.forward, arm.handRotation * Vector3.up);
-            float handPitch = m * (((Quaternion.Inverse(elbowForward) * handForward).eulerAngles.y + 180.0f) % 360.0f - 180.0f);
+            static float saturate(float value, float pow) => (1.0f - 1.0f / Mathf.Pow(Mathf.Abs(value) + 1, pow)) * Mathf.Sign(value);
 
             {
-                float weight = Mathf.Clamp(1.0f - Mathf.Abs(handPitch / 45.0f), 0.0f, 1.0f);
+                float wl = 120.0f;
+                float wu = 60.0f;
+
+                float pow = 0.2f;
 
                 float al = 0.0f;
                 float cl = -1 / 600.0f;
                 float au = 90.0f;
                 float cu = 1 / 300.0f;
 
-                if (handYaw < al) elbowRoll += weight * m * cl * Mathf.Pow(handYaw - al, 2.0f);
-                if (handYaw > au) elbowRoll += weight * m * cu * Mathf.Pow(handYaw - au, 2.0f);
+                if (elbowRelativeHandYaw < al) elbowRoll += wl * m * saturate(cl * Mathf.Pow(elbowRelativeHandYaw - al, 2.0f), pow);
+                if (elbowRelativeHandYaw > au) elbowRoll += wu * m * saturate(cu * Mathf.Pow(elbowRelativeHandYaw - au, 2.0f), pow);
             }
 
             {
-                float weight = 1.0f;// Mathf.Clamp(1.0f - Mathf.Abs(handYaw / 90.0f), 0.0f, 1.0f);
+                float wl = 120.0f;
+                float wu = 60.0f;
+
+                float pow = 0.2f;
 
                 float al = -45.0f;
                 float cl = -1 / 135.0f;
                 float au = 45.0f;
                 float cu = 1 / 135.0f;
 
-                if (handPitch < al) elbowRoll += weight * m * cl * Mathf.Pow(handPitch - al, 2.0f);
-                if (handPitch > au) elbowRoll += weight * m * cu * Mathf.Pow(handPitch - au, 2.0f);
+                if (elbowRelativeHandPitch < al) elbowRoll -= wl * m * saturate(cl * Mathf.Pow(elbowRelativeHandPitch - al, 2.0f), pow);
+                if (elbowRelativeHandPitch > au) elbowRoll -= wu * m * saturate(cu * Mathf.Pow(elbowRelativeHandPitch - au, 2.0f), pow);
             }
 
             elbowPosition = elbowCenter + elbowRotation * Quaternion.AngleAxis(elbowRoll, Vector3.forward) * Vector3.up * elbowRadius;
