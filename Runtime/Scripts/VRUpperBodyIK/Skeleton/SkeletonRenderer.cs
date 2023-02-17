@@ -22,7 +22,7 @@ namespace VRUpperBodyIK.Skeleton
             }
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             var pose = useCalibratedPose ? skeleton.CalibratedWorldPose : skeleton.UncalibratedWorldPose;
 
