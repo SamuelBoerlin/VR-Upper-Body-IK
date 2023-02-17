@@ -51,24 +51,27 @@ namespace VRUpperBodyIK.Skeleton
         {
             if (drawPositionGizmos && targetSkeleton != null)
             {
-                for (int i = 0; i < 7; ++i)
+                for (int i = 0; i < targetSkeleton.Transforms.Length; ++i)
                 {
                     var transform = targetSkeleton.Transforms[i];
 
-                    var rot = transform.rotation * Offset.Rotation(i);
-                    var pos = transform.position + rot * Offset.Position(i);
+                    if(transform != null)
+                    {
+                        var rot = transform.rotation * Offset.Rotation(i);
+                        var pos = transform.position + rot * Offset.Position(i);
 
-                    Gizmos.color = Color.yellow;
-                    Gizmos.DrawSphere(pos, 0.015f);
+                        Gizmos.color = Color.yellow;
+                        Gizmos.DrawSphere(pos, 0.015f);
 
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawRay(pos, rot * new Vector3(0.1f, 0, 0));
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawRay(pos, rot * new Vector3(0.1f, 0, 0));
 
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawRay(pos, rot * new Vector3(0, 0.1f, 0));
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawRay(pos, rot * new Vector3(0, 0.1f, 0));
 
-                    Gizmos.color = Color.blue;
-                    Gizmos.DrawRay(pos, rot * new Vector3(0, 0, 0.1f));
+                        Gizmos.color = Color.blue;
+                        Gizmos.DrawRay(pos, rot * new Vector3(0, 0, 0.1f));
+                    }
                 }
             }
         }

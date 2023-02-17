@@ -26,6 +26,12 @@ namespace VRUpperBodyIK.IK
             pose.leftArm.shoulderRotation = pose.rightArm.shoulderRotation = ShoulderRotation;
         }
 
+        public void PostUpdate(Skeleton.Pose pose, BodySettings bodySettings)
+        {
+            RotateShoulderWithElbow(pose.leftArm);
+            RotateShoulderWithElbow(pose.rightArm);
+        }
+
         private void PositionNeck(Skeleton.Pose pose, BodySettings bodySettings)
         {
             Quaternion neckRotation = pose.headRotation;
@@ -44,6 +50,12 @@ namespace VRUpperBodyIK.IK
 
             RotateNeck(pose, neckPosition);
             ConstrainNeckToHead(pose);
+
+            pose.neckPosition = neckPosition;
+
+            float neckRollCorrectionRange = 22.5f;
+            float neckRoll = -shoulderForwardRoll + Mathf.Clamp(Mathf.DeltaAngle(-shoulderForwardRoll, pose.headRotation.eulerAngles.z) * 0.5f, -neckRollCorrectionRange, neckRollCorrectionRange);
+            pose.neckRotation = Quaternion.AngleAxis(neckForwardAngle, Vector3.up) * Quaternion.AngleAxis(neckRoll, Vector3.forward);
         }
 
         private void RotateNeck(Skeleton.Pose pose, Vector3 neckPosition)
@@ -156,6 +168,13 @@ namespace VRUpperBodyIK.IK
             float angle = c * Mathf.Clamp(Vector3.Dot(sth, dir) / bodySettings.ArmLength, -1.0f, 1.0f) - d;
 
             return angle;
+        }
+
+        private void RotateShoulderWithElbow(Arm arm)
+        {
+            Vector3 shoulderY = arm.elbowRotation * Vector3.up;
+            Vector3 shoulderZ = (arm.elbowPosition - arm.shoulderPosition).normalized;
+            arm.shoulderRotation = Quaternion.LookRotation(shoulderZ, shoulderY);
         }
     }
 }

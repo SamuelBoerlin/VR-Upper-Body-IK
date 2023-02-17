@@ -13,15 +13,11 @@ namespace VRUpperBodyIK.Skeleton
 
         private Solver solver;
 
-        private void Awake()
-        {
-            solver = new Solver(positioners);
-        }
-
         private void FixedUpdate()
         {
             var pose = skeleton.CalibratedWorldPose;
 
+            solver ??= new(positioners);
             solver.Solve(pose);
 
             ApplyPoseToSkeleton(pose);
@@ -30,10 +26,22 @@ namespace VRUpperBodyIK.Skeleton
         protected void ApplyPoseToSkeleton(Pose pose)
         {
             skeleton.leftShoulder.position = pose.leftArm.shoulderPosition;
+            skeleton.leftShoulder.rotation = pose.leftArm.shoulderRotation;
+
             skeleton.leftElbow.position = pose.leftArm.elbowPosition;
+            skeleton.leftElbow.rotation = pose.leftArm.elbowRotation;
 
             skeleton.rightShoulder.position = pose.rightArm.shoulderPosition;
+            skeleton.rightShoulder.rotation = pose.rightArm.shoulderRotation;
+
             skeleton.rightElbow.position = pose.rightArm.elbowPosition;
+            skeleton.rightElbow.rotation = pose.rightArm.elbowRotation;
+
+            if (skeleton.neck != null)
+            {
+                skeleton.neck.position = pose.neckPosition;
+                skeleton.neck.rotation = pose.neckRotation;
+            }
         }
     }
 }

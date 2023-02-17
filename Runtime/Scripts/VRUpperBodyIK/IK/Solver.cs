@@ -21,6 +21,11 @@ namespace VRUpperBodyIK.IK
                 {
                     provider.Positioner.Update(pose, bodySettings);
                 }
+
+                foreach (PositionerProvider provider in positioners)
+                {
+                    provider.Positioner.PostUpdate(pose, bodySettings);
+                }
             }
         }
     }

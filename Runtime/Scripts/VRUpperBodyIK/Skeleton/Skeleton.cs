@@ -6,6 +6,8 @@ namespace VRUpperBodyIK.Skeleton
     {
         public Transform head;
 
+        public Transform neck;
+
         public Transform leftShoulder;
         public Transform leftElbow;
         public Transform leftHand;
@@ -21,7 +23,7 @@ namespace VRUpperBodyIK.Skeleton
             {
                 if (_transforms == null)
                 {
-                    _transforms = new Transform[] { head, leftShoulder, leftElbow, leftHand, rightShoulder, rightElbow, rightHand };
+                    _transforms = new Transform[] { head, neck, leftShoulder, leftElbow, leftHand, rightShoulder, rightElbow, rightHand };
                 }
                 return _transforms;
             }

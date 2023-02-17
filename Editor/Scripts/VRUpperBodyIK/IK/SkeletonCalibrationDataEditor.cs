@@ -38,13 +38,16 @@ namespace VRUpperBodyIK.IK
 
                 foreach (var transform in sourceChain.Transforms)
                 {
-                    var positionOffset = offset.Position(i);
-                    var rotationOffset = offset.Rotation(i);
-
-                    if (CalibrationPointHandle(data, transform.position, transform.rotation, positionOffset, rotationOffset, out var newPositionOffset, out var newRotationOffset))
+                    if(transform != null)
                     {
-                        offset.SetPosition(i, newPositionOffset);
-                        offset.SetRotation(i, newRotationOffset);
+                        var positionOffset = offset.Position(i);
+                        var rotationOffset = offset.Rotation(i);
+
+                        if (CalibrationPointHandle(data, transform.position, transform.rotation, positionOffset, rotationOffset, out var newPositionOffset, out var newRotationOffset))
+                        {
+                            offset.SetPosition(i, newPositionOffset);
+                            offset.SetRotation(i, newRotationOffset);
+                        }
                     }
 
                     ++i;

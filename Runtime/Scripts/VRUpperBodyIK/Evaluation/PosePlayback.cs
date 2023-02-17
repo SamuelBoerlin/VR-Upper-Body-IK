@@ -18,7 +18,7 @@ namespace VRUpperBodyIK.Evaluation
 
         public bool disableTrackers = true;
 
-        private bool[] reenableTrackers = new bool[7];
+        private bool[] reenableTrackers = new bool[8];
 
         private void Start()
         {
@@ -33,11 +33,14 @@ namespace VRUpperBodyIK.Evaluation
                 int i = 0;
                 foreach (var transform in skeleton.Transforms)
                 {
-                    var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
-                    if (driver != null)
+                    if(transform != null)
                     {
-                        reenableTrackers[i++] = driver.enabled;
-                        driver.enabled = false;
+                        var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
+                        if (driver != null)
+                        {
+                            reenableTrackers[i++] = driver.enabled;
+                            driver.enabled = false;
+                        }
                     }
                 }
             }
@@ -48,10 +51,13 @@ namespace VRUpperBodyIK.Evaluation
             int i = 0;
             foreach (var transform in skeleton.Transforms)
             {
-                var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
-                if (driver != null && reenableTrackers[i++])
+                if(transform != null)
                 {
-                    driver.enabled = true;
+                    var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
+                    if (driver != null && reenableTrackers[i++])
+                    {
+                        driver.enabled = true;
+                    }
                 }
             }
         }

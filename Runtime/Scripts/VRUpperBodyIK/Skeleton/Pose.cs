@@ -8,6 +8,9 @@ namespace VRUpperBodyIK.Skeleton
         public Vector3 headPosition = Vector3.zero;
         public Quaternion headRotation = Quaternion.identity;
 
+        public Vector3 neckPosition = Vector3.zero;
+        public Quaternion neckRotation = Quaternion.identity;
+
         public Arm leftArm = new Arm();
 
         public Arm rightArm = new Arm();
@@ -16,12 +19,13 @@ namespace VRUpperBodyIK.Skeleton
         {
             return idx switch
             {
-                1 => leftArm.shoulderPosition,
-                2 => leftArm.elbowPosition,
-                3 => leftArm.handPosition,
-                4 => rightArm.shoulderPosition,
-                5 => rightArm.elbowPosition,
-                6 => rightArm.handPosition,
+                1 => neckPosition,
+                2 => leftArm.shoulderPosition,
+                3 => leftArm.elbowPosition,
+                4 => leftArm.handPosition,
+                5 => rightArm.shoulderPosition,
+                6 => rightArm.elbowPosition,
+                7 => rightArm.handPosition,
                 _ => headPosition
             };
         }
@@ -34,21 +38,24 @@ namespace VRUpperBodyIK.Skeleton
                     headPosition = position;
                     break;
                 case 1:
-                    leftArm.shoulderPosition = position;
+                    neckPosition = position;
                     break;
                 case 2:
-                    leftArm.elbowPosition = position;
+                    leftArm.shoulderPosition = position;
                     break;
                 case 3:
-                    leftArm.handPosition = position;
+                    leftArm.elbowPosition = position;
                     break;
                 case 4:
-                    rightArm.shoulderPosition = position;
+                    leftArm.handPosition = position;
                     break;
                 case 5:
-                    rightArm.elbowPosition = position;
+                    rightArm.shoulderPosition = position;
                     break;
                 case 6:
+                    rightArm.elbowPosition = position;
+                    break;
+                case 7:
                     rightArm.handPosition = position;
                     break;
             };
@@ -58,13 +65,14 @@ namespace VRUpperBodyIK.Skeleton
         {
             return idx switch
             {
-                1 => leftArm.shoulderRotation,
-                2 => leftArm.elbowRotation,
-                3 => leftArm.handRotation,
-                4 => rightArm.shoulderRotation,
-                5 => rightArm.elbowRotation,
-                6 => rightArm.handRotation,
-                _ => headRotation,
+                1 => neckRotation,
+                2 => leftArm.shoulderRotation,
+                3 => leftArm.elbowRotation,
+                4 => leftArm.handRotation,
+                5 => rightArm.shoulderRotation,
+                6 => rightArm.elbowRotation,
+                7 => rightArm.handRotation,
+                _ => headRotation
             };
         }
 
@@ -76,21 +84,24 @@ namespace VRUpperBodyIK.Skeleton
                     headRotation = rotation;
                     break;
                 case 1:
-                    leftArm.shoulderRotation = rotation;
+                    neckRotation = rotation;
                     break;
                 case 2:
-                    leftArm.elbowRotation = rotation;
+                    leftArm.shoulderRotation = rotation;
                     break;
                 case 3:
-                    leftArm.handRotation = rotation;
+                    leftArm.elbowRotation = rotation;
                     break;
                 case 4:
-                    rightArm.shoulderRotation = rotation;
+                    leftArm.handRotation = rotation;
                     break;
                 case 5:
-                    rightArm.elbowRotation = rotation;
+                    rightArm.shoulderRotation = rotation;
                     break;
                 case 6:
+                    rightArm.elbowRotation = rotation;
+                    break;
+                case 7:
                     rightArm.handRotation = rotation;
                     break;
             };
