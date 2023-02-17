@@ -18,7 +18,7 @@ namespace VRUpperBodyIK.Skeleton
         [Tooltip("Skeleton to scale the arm to.")]
         public Skeleton skeleton;
 
-        public bool useCalibratedPose = false;
+        public bool useCalibratedPose = true;
 
         private void LateUpdate()
         {

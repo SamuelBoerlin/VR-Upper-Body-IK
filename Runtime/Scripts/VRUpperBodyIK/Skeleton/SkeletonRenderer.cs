@@ -7,7 +7,7 @@ namespace VRUpperBodyIK.Skeleton
     {
         public LineRenderer lineRendererPrefab;
 
-        public bool useCalibratedPose = false;
+        public bool useCalibratedPose = true;
 
         private Skeleton skeleton;
         private LineRenderer[] lineRenderers = new LineRenderer[4];

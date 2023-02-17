@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limb: 2
   skeleton: {fileID: 5324071900703088196}
-  useCalibratedPose: 0
+  useCalibratedPose: 1
 --- !u!1 &1100112211382176788
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limb: 3
   skeleton: {fileID: 5324071900703088196}
-  useCalibratedPose: 0
+  useCalibratedPose: 1
 --- !u!1 &2398652141606952173
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limb: 0
   skeleton: {fileID: 5324071900703088196}
-  useCalibratedPose: 0
+  useCalibratedPose: 1
 --- !u!1 &3882368140654740174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1192,14 @@ MonoBehaviour:
   rightElbow: {fileID: 7292149243508902210}
   rightHand: {fileID: 7292149242321348379}
   calibrationData: {fileID: 8992492810074633273}
+  calibrateHead: 1
+  calibrateNeck: 0
+  calibrateLeftShoulder: 0
+  calibrateLeftElbow: 0
+  calibrateLeftHand: 1
+  calibrateRightShoulder: 0
+  calibrateRightElbow: 0
+  calibrateRightHand: 1
   drawUncalibratedSkeletonGizmos: 0
   drawCalibratedSkeletonGizmos: 0
 --- !u!114 &3681742733209405800
@@ -1206,9 +1214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0835707b54f7684483741b57d668745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSkeleton: {fileID: 0}
+  targetSkeleton: {fileID: 5324071900703088196}
   edit: 0
-  drawPositionGizmos: 0
+  drawPositionGizmos: 1
   loadFromFile: 0
   calibrationFile: 
 --- !u!114 &709254487519314354
@@ -1957,6 +1965,14 @@ MonoBehaviour:
   rightElbow: {fileID: 7292149243129557296}
   rightHand: {fileID: 7292149242321348379}
   calibrationData: {fileID: 8992492810074633273}
+  calibrateHead: 1
+  calibrateNeck: 1
+  calibrateLeftShoulder: 1
+  calibrateLeftElbow: 1
+  calibrateLeftHand: 1
+  calibrateRightShoulder: 1
+  calibrateRightElbow: 1
+  calibrateRightHand: 1
   drawUncalibratedSkeletonGizmos: 0
   drawCalibratedSkeletonGizmos: 1
 --- !u!114 &8992492810074633273
@@ -2528,4 +2544,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limb: 1
   skeleton: {fileID: 5324071900703088196}
-  useCalibratedPose: 0
+  useCalibratedPose: 1
