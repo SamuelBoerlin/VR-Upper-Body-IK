@@ -1,10 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace VRUpperBodyIK.Skeleton
 {
     public class SkeletonCalibrationData : MonoBehaviour
     {
-        public Pose Offset { get; set; } = new();
+        private Pose _offset = new();
+        public Pose Offset
+        {
+            get => _offset;
+            set
+            {
+                if(_offset != value)
+                {
+                    _offset = value;
+                    OnCalibrationChanged?.Invoke();
+                }
+            }
+        }
 
         [Tooltip("Skeleton to which this calibration should be applied to. Used for visualisation purposes only.")]
         public Skeleton targetSkeleton;
@@ -20,6 +33,8 @@ namespace VRUpperBodyIK.Skeleton
 
         [Tooltip("File to load calibration data from if 'Load From File' is true.")]
         public string calibrationFile;
+
+        public UnityEvent OnCalibrationChanged;
 
         private void Start()
         {

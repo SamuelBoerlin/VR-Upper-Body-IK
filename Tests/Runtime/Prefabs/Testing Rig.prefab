@@ -1192,14 +1192,7 @@ MonoBehaviour:
   rightElbow: {fileID: 7292149243508902210}
   rightHand: {fileID: 7292149242321348379}
   calibrationData: {fileID: 8992492810074633273}
-  calibrateHead: 1
-  calibrateNeck: 0
-  calibrateLeftShoulder: 0
-  calibrateLeftElbow: 0
-  calibrateLeftHand: 1
-  calibrateRightShoulder: 0
-  calibrateRightElbow: 0
-  calibrateRightHand: 1
+  calibrateJoints: 000000000400000007000000
   drawUncalibratedSkeletonGizmos: 0
   drawCalibratedSkeletonGizmos: 0
 --- !u!114 &3681742733209405800
@@ -1219,6 +1212,9 @@ MonoBehaviour:
   drawPositionGizmos: 1
   loadFromFile: 0
   calibrationFile: 
+  OnCalibrationChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &709254487519314354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,12 +1227,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d9f892ef150e44792c09f1c6acd468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeleton: {fileID: 5324071900703088196}
+  sourceSkeleton: {fileID: 5324071900703088196}
+  targetSkeleton: {fileID: 5324071900703088196}
   positioners:
   - {fileID: 5542431443632101796}
   - {fileID: 9068585278311481120}
   - {fileID: 7128170600906817683}
   - {fileID: 3762539203222740277}
+  useCalibratedPose: 1
+  applyJoints: 0000000001000000020000000300000004000000050000000600000007000000
 --- !u!114 &5542431443632101796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,14 +1964,7 @@ MonoBehaviour:
   rightElbow: {fileID: 7292149243129557296}
   rightHand: {fileID: 7292149242321348379}
   calibrationData: {fileID: 8992492810074633273}
-  calibrateHead: 1
-  calibrateNeck: 1
-  calibrateLeftShoulder: 1
-  calibrateLeftElbow: 1
-  calibrateLeftHand: 1
-  calibrateRightShoulder: 1
-  calibrateRightElbow: 1
-  calibrateRightHand: 1
+  calibrateJoints: 0000000001000000020000000300000004000000050000000600000007000000
   drawUncalibratedSkeletonGizmos: 0
   drawCalibratedSkeletonGizmos: 1
 --- !u!114 &8992492810074633273
@@ -1992,6 +1984,9 @@ MonoBehaviour:
   drawPositionGizmos: 1
   loadFromFile: 1
   calibrationFile: Assets/vr-upper-body-ik/Tests/Runtime/Data/Calibration/base_calibration.json
+  OnCalibrationChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4123439437778872649
 MonoBehaviour:
   m_ObjectHideFlags: 0

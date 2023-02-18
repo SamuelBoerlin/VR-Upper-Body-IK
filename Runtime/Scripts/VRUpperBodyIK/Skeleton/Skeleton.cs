@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 
 namespace VRUpperBodyIK.Skeleton
 {
@@ -31,26 +33,16 @@ namespace VRUpperBodyIK.Skeleton
 
         public SkeletonCalibrationData calibrationData;
 
-        public bool calibrateHead = true;
-
-        public bool calibrateNeck = true;
-
-        public bool calibrateLeftShoulder = true;
-        public bool calibrateLeftElbow = true;
-        public bool calibrateLeftHand = true;
-
-        public bool calibrateRightShoulder = true;
-        public bool calibrateRightElbow = true;
-        public bool calibrateRightHand = true;
+        public Joint[] calibrateJoints = (Joint[])Enum.GetValues(typeof(Joint));
 
         public bool drawUncalibratedSkeletonGizmos;
         public bool drawCalibratedSkeletonGizmos;
 
         private static readonly Pose identityPose = new Pose();
 
-        private Pose GetOffsetPose(bool calibrate)
+        private Pose GetOffsetPose(Joint joint)
         {
-            return calibrate ? calibrationData.Offset : identityPose;
+            return calibrateJoints.Contains(joint) ? calibrationData.Offset : identityPose;
         }
 
         public Pose CalibratedLocalPose
@@ -65,56 +57,56 @@ namespace VRUpperBodyIK.Skeleton
 
                     if (head != null)
                     {
-                        offset = GetOffsetPose(calibrateHead);
+                        offset = GetOffsetPose(Joint.Head);
                         pose.headPosition = head.localPosition + head.localRotation * offset.headRotation * offset.headPosition;
                         pose.headRotation = head.localRotation * offset.headRotation;
                     }
 
                     if (neck != null)
                     {
-                        offset = GetOffsetPose(calibrateNeck);
+                        offset = GetOffsetPose(Joint.Neck);
                         pose.neckPosition = neck.localPosition + neck.localRotation * offset.neckRotation * offset.neckPosition;
                         pose.neckRotation = neck.localRotation * offset.neckRotation;
                     }
 
                     if (leftShoulder != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftShoulder);
+                        offset = GetOffsetPose(Joint.LeftShoulder);
                         pose.leftArm.shoulderPosition = leftShoulder.localPosition + leftShoulder.localRotation * offset.leftArm.shoulderRotation * offset.leftArm.shoulderPosition;
                         pose.leftArm.shoulderRotation = leftShoulder.localRotation * offset.leftArm.shoulderRotation;
                     }
 
                     if (leftElbow != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftElbow);
+                        offset = GetOffsetPose(Joint.LeftElbow);
                         pose.leftArm.elbowPosition = leftElbow.localPosition + leftElbow.localRotation * offset.leftArm.elbowRotation * offset.leftArm.elbowPosition;
                         pose.leftArm.elbowRotation = leftElbow.localRotation * offset.leftArm.elbowRotation;
                     }
 
                     if (leftHand != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftHand);
+                        offset = GetOffsetPose(Joint.LeftHand);
                         pose.leftArm.handPosition = leftHand.localPosition + leftHand.localRotation * offset.leftArm.handRotation * offset.leftArm.handPosition;
                         pose.leftArm.handRotation = leftHand.localRotation * offset.leftArm.handRotation;
                     }
 
                     if (rightShoulder != null)
                     {
-                        offset = GetOffsetPose(calibrateRightShoulder);
+                        offset = GetOffsetPose(Joint.RightShoulder);
                         pose.rightArm.shoulderPosition = rightShoulder.localPosition + rightShoulder.localRotation * offset.rightArm.shoulderRotation * offset.rightArm.shoulderPosition;
                         pose.rightArm.shoulderRotation = rightShoulder.localRotation * offset.rightArm.shoulderRotation;
                     }
 
                     if (rightElbow != null)
                     {
-                        offset = GetOffsetPose(calibrateRightElbow);
+                        offset = GetOffsetPose(Joint.RightElbow);
                         pose.rightArm.elbowPosition = rightElbow.localPosition + rightElbow.localRotation * offset.rightArm.elbowRotation * offset.rightArm.elbowPosition;
                         pose.rightArm.elbowRotation = rightElbow.localRotation * offset.rightArm.elbowRotation;
                     }
 
                     if (rightHand != null)
                     {
-                        offset = GetOffsetPose(calibrateRightHand);
+                        offset = GetOffsetPose(Joint.RightHand);
                         pose.rightArm.handPosition = rightHand.localPosition + rightHand.localRotation * offset.rightArm.handRotation * offset.rightArm.handPosition;
                         pose.rightArm.handRotation = rightHand.localRotation * offset.rightArm.handRotation;
                     }
@@ -137,56 +129,56 @@ namespace VRUpperBodyIK.Skeleton
 
                     if (head != null)
                     {
-                        offset = GetOffsetPose(calibrateHead);
+                        offset = GetOffsetPose(Joint.Head);
                         pose.headPosition = head.position + head.rotation * offset.headRotation * offset.headPosition;
                         pose.headRotation = head.rotation * offset.headRotation;
                     }
 
                     if (neck != null)
                     {
-                        offset = GetOffsetPose(calibrateNeck);
+                        offset = GetOffsetPose(Joint.Neck);
                         pose.neckPosition = neck.position + neck.rotation * offset.neckRotation * offset.neckPosition;
                         pose.neckRotation = neck.rotation * offset.neckRotation;
                     }
 
                     if (leftShoulder != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftShoulder);
+                        offset = GetOffsetPose(Joint.LeftShoulder);
                         pose.leftArm.shoulderPosition = leftShoulder.position + leftShoulder.rotation * offset.leftArm.shoulderRotation * offset.leftArm.shoulderPosition;
                         pose.leftArm.shoulderRotation = leftShoulder.rotation * offset.leftArm.shoulderRotation;
                     }
 
                     if (leftElbow != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftElbow);
+                        offset = GetOffsetPose(Joint.LeftElbow);
                         pose.leftArm.elbowPosition = leftElbow.position + leftElbow.rotation * offset.leftArm.elbowRotation * offset.leftArm.elbowPosition;
                         pose.leftArm.elbowRotation = leftElbow.rotation * offset.leftArm.elbowRotation;
                     }
 
                     if (leftHand != null)
                     {
-                        offset = GetOffsetPose(calibrateLeftHand);
+                        offset = GetOffsetPose(Joint.LeftHand);
                         pose.leftArm.handPosition = leftHand.position + leftHand.rotation * offset.leftArm.handRotation * offset.leftArm.handPosition;
                         pose.leftArm.handRotation = leftHand.rotation * offset.leftArm.handRotation;
                     }
 
                     if (rightShoulder != null)
                     {
-                        offset = GetOffsetPose(calibrateRightShoulder);
+                        offset = GetOffsetPose(Joint.RightShoulder);
                         pose.rightArm.shoulderPosition = rightShoulder.position + rightShoulder.rotation * offset.rightArm.shoulderRotation * offset.rightArm.shoulderPosition;
                         pose.rightArm.shoulderRotation = rightShoulder.rotation * offset.rightArm.shoulderRotation;
                     }
 
                     if (rightElbow != null)
                     {
-                        offset = GetOffsetPose(calibrateRightElbow);
+                        offset = GetOffsetPose(Joint.RightElbow);
                         pose.rightArm.elbowPosition = rightElbow.position + rightElbow.rotation * offset.rightArm.elbowRotation * offset.rightArm.elbowPosition;
                         pose.rightArm.elbowRotation = rightElbow.rotation * offset.rightArm.elbowRotation;
                     }
 
                     if (rightHand != null)
                     {
-                        offset = GetOffsetPose(calibrateRightHand);
+                        offset = GetOffsetPose(Joint.RightHand);
                         pose.rightArm.handPosition = rightHand.position + rightHand.rotation * offset.rightArm.handRotation * offset.rightArm.handPosition;
                         pose.rightArm.handRotation = rightHand.rotation * offset.rightArm.handRotation;
                     }
