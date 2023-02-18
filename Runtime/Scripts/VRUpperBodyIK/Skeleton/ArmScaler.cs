@@ -18,6 +18,8 @@ namespace VRUpperBodyIK.Skeleton
         [Tooltip("Skeleton to scale the arm to.")]
         public Skeleton skeleton;
 
+        public bool offsetZ = false;
+
         public bool useCalibratedPose = true;
 
         private void LateUpdate()
@@ -27,14 +29,16 @@ namespace VRUpperBodyIK.Skeleton
             var joints = GetJointPositions(GetArm(pose));
             var limbLength = (joints.Lower - joints.Upper).magnitude;
 
-            var pos = transform.localPosition;
             var scale = transform.localScale;
-
-            pos.z = limbLength * 0.5f;
             scale.z = limbLength;
-
-            transform.localPosition = pos;
             transform.localScale = scale;
+
+            if (offsetZ)
+            {
+                var pos = transform.localPosition;
+                pos.z = limbLength * 0.5f;
+                transform.localPosition = pos;
+            }
         }
 
         private Arm GetArm(Pose pose)

@@ -15,10 +15,24 @@ namespace VRUpperBodyIK.Skeleton
         private void Awake()
         {
             skeleton = GetComponent<Skeleton>();
+        }
 
+        private void OnEnable()
+        {
             for (int i = 0; i < 4; ++i)
             {
                 lineRenderers[i] = Instantiate(lineRendererPrefab, transform);
+            }
+        }
+
+        private void OnDisable()
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                if (lineRenderers[i] != null)
+                {
+                    Destroy(lineRenderers[i].gameObject);
+                }
             }
         }
 
@@ -32,13 +46,19 @@ namespace VRUpperBodyIK.Skeleton
 
         private void ApplyForArm(Arm arm, int index)
         {
-            lineRenderers[index + 0].positionCount = 2;
-            lineRenderers[index + 0].SetPosition(0, arm.shoulderPosition);
-            lineRenderers[index + 0].SetPosition(1, arm.elbowPosition);
+            if (lineRenderers[index + 0] != null)
+            {
+                lineRenderers[index + 0].positionCount = 2;
+                lineRenderers[index + 0].SetPosition(0, arm.shoulderPosition);
+                lineRenderers[index + 0].SetPosition(1, arm.elbowPosition);
+            }
 
-            lineRenderers[index + 1].positionCount = 2;
-            lineRenderers[index + 1].SetPosition(0, arm.elbowPosition);
-            lineRenderers[index + 1].SetPosition(1, arm.handPosition);
+            if (lineRenderers[index + 1] != null)
+            {
+                lineRenderers[index + 1].positionCount = 2;
+                lineRenderers[index + 1].SetPosition(0, arm.elbowPosition);
+                lineRenderers[index + 1].SetPosition(1, arm.handPosition);
+            }
         }
     }
 }
