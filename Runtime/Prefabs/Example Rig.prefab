@@ -1306,12 +1306,12 @@ MonoBehaviour:
     m_Name: Start Recording
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: b14c38a0-d5c7-4d6e-ba9e-4a9f9dbf26da
+    m_Id: d3e8c5c4-8214-4bc1-89b9-66a1e682db0c
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  recordingFileName: vr-upper-body-ik/Tests/Runtime/Data/Tracking/pose_recording
+  recordingFileName: pose_recording
   isRecording: 0
 --- !u!1 &2020840415573898069
 GameObject:
@@ -1782,12 +1782,12 @@ GameObject:
   - component: {fileID: 7870881987601583608}
   - component: {fileID: 5341745509157047980}
   - component: {fileID: 8137542240562726518}
+  - component: {fileID: 8067333003905926953}
   - component: {fileID: 3878497267089350240}
   - component: {fileID: 352278011197602020}
   - component: {fileID: 2005726750832953175}
   - component: {fileID: 5552557664763386609}
   - component: {fileID: 1099496312336042972}
-  - component: {fileID: 8067333003905926953}
   m_Layer: 0
   m_Name: Simulated
   m_TagString: Untagged
@@ -1882,6 +1882,20 @@ MonoBehaviour:
   - {fileID: 5552557664763386609}
   useCalibratedPose: 1
   applyJoints: 01000000020000000300000004000000050000000600000007000000
+--- !u!114 &8067333003905926953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020840416594746864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2941f4a0afcff5c478d7cf9379939861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPrefab: {fileID: 0}
+  useCalibratedPose: 1
 --- !u!114 &3878497267089350240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1964,21 +1978,6 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   calibrateAfterSeconds: 1
---- !u!114 &8067333003905926953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020840416594746864}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2941f4a0afcff5c478d7cf9379939861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRendererPrefab: {fileID: 7646199335235651284, guid: 57ef6453f9c7a9440a7370f1c8655b56,
-    type: 3}
-  useCalibratedPose: 0
 --- !u!1 &2020840416926942218
 GameObject:
   m_ObjectHideFlags: 0
