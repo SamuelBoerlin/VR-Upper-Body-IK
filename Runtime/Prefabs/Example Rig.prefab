@@ -1269,7 +1269,7 @@ MonoBehaviour:
   edit: 0
   drawPositionGizmos: 1
   loadFromFile: 1
-  calibrationFile: Assets/vr-upper-body-ik/Tests/Runtime/Data/Calibration/base_calibration.json
+  calibrationFile: {fileID: 4900000, guid: 47f01025878f2874eac4df458dcf597f, type: 3}
   OnCalibrationChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeleton: {fileID: 1330915697989801230}
-  recordingFileName: Assets/vr-upper-body-ik/Tests/Runtime/Data/Tracking/arm_movements.json
+  recordingFile: {fileID: 4900000, guid: 633224ced765d5c40bbadd5c26446390, type: 3}
   isPlaying: 1
   disableTrackers: 1
 --- !u!114 &5068876711828304027
@@ -1857,7 +1857,7 @@ MonoBehaviour:
   edit: 0
   drawPositionGizmos: 1
   loadFromFile: 0
-  calibrationFile: 
+  calibrationFile: {fileID: 0}
   OnCalibrationChanged:
     m_PersistentCalls:
       m_Calls: []

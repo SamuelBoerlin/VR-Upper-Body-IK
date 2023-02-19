@@ -8,7 +8,7 @@ namespace VRUpperBodyIK.Evaluation
     {
         public Skeleton.Skeleton skeleton;
 
-        public string recordingFileName = "pose_recording";
+        public TextAsset recordingFile;
 
         public bool isPlaying;
         private float playbackStartTime;
@@ -22,8 +22,11 @@ namespace VRUpperBodyIK.Evaluation
 
         private void Start()
         {
-            string json = File.ReadAllText(recordingFileName);
-            recording = JsonUtility.FromJson<Recording>(json);
+            if (recordingFile != null)
+            {
+                string json = recordingFile.text;
+                recording = JsonUtility.FromJson<Recording>(json);
+            }
         }
 
         private void OnEnable()
@@ -33,7 +36,7 @@ namespace VRUpperBodyIK.Evaluation
                 int i = 0;
                 foreach (var transform in skeleton.Transforms)
                 {
-                    if(transform != null)
+                    if (transform != null)
                     {
                         var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
                         if (driver != null)
@@ -51,7 +54,7 @@ namespace VRUpperBodyIK.Evaluation
             int i = 0;
             foreach (var transform in skeleton.Transforms)
             {
-                if(transform != null)
+                if (transform != null)
                 {
                     var driver = transform.gameObject.GetComponent<TrackedPoseDriver>();
                     if (driver != null && reenableTrackers[i++])

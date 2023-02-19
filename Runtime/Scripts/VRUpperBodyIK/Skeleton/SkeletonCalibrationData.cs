@@ -11,7 +11,7 @@ namespace VRUpperBodyIK.Skeleton
             get => _offset;
             set
             {
-                if(_offset != value)
+                if (_offset != value)
                 {
                     _offset = value;
                     OnCalibrationChanged?.Invoke();
@@ -32,7 +32,7 @@ namespace VRUpperBodyIK.Skeleton
         public bool loadFromFile;
 
         [Tooltip("File to load calibration data from if 'Load From File' is true.")]
-        public string calibrationFile;
+        public TextAsset calibrationFile;
 
         public UnityEvent OnCalibrationChanged;
 
@@ -50,9 +50,9 @@ namespace VRUpperBodyIK.Skeleton
             System.IO.File.WriteAllText(path, json);
         }
 
-        public bool LoadCalibrationData(string path)
+        public bool LoadCalibrationData(TextAsset asset)
         {
-            var json = System.IO.File.ReadAllText(path);
+            var json = asset.text;
             var offset = JsonUtility.FromJson<Pose>(json);
             if (offset != null)
             {
@@ -70,7 +70,7 @@ namespace VRUpperBodyIK.Skeleton
                 {
                     var transform = targetSkeleton.Transforms[i];
 
-                    if(transform != null)
+                    if (transform != null)
                     {
                         var rot = transform.rotation * Offset.Rotation(i);
                         var pos = transform.position + rot * Offset.Position(i);
