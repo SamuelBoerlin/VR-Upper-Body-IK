@@ -22,7 +22,12 @@ namespace VRUpperBodyIK.Skeleton
 
         private Solver solver;
 
-        private void FixedUpdate()
+        private void Update()
+        {
+            SolveAndApply();
+        }
+
+        public void SolveAndApply()
         {
             var pose = useCalibratedPose ? sourceSkeleton.CalibratedWorldPose : sourceSkeleton.UncalibratedWorldPose;
 

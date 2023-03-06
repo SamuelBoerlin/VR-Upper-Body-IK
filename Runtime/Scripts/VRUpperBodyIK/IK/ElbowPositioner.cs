@@ -38,8 +38,8 @@ namespace VRUpperBodyIK.IK
 
             ConstrainElbowsToHand(arm);
 
-            elbowRollRotation = Quaternion.AngleAxis(elbowRollAngle, (arm.handPosition - arm.shoulderPosition).normalized);
-            arm.elbowRotation = elbowRollRotation * Quaternion.LookRotation(Quaternion.Inverse(elbowRollRotation) * (arm.handPosition - arm.elbowPosition).normalized, Vector3.up) * Quaternion.AngleAxis((isLeftArm ? -1 : 1) * 90.0f, Vector3.forward) /*TODO ?*/;
+            elbowRollRotation = Quaternion.AngleAxis(elbowRollAngle, Vector3.forward);
+            arm.elbowRotation = Quaternion.LookRotation((arm.handPosition - arm.elbowPosition).normalized, elbowRotation * elbowRollRotation * Vector3.left * (isLeftArm ? -1 : 1));
 
             Vector3 lhte = arm.elbowPosition - arm.handPosition;
             if (lhte.magnitude > bodySettings.HandElbowDistance)

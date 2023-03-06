@@ -15,7 +15,7 @@ namespace VRUpperBodyIK.IK
         private float shoulderForwardYaw;
         private float shoulderForwardRoll;
 
-        public Quaternion ShoulderRotation => Quaternion.AngleAxis(shoulderForwardRoll, Vector3.forward) * Quaternion.AngleAxis(shoulderForwardYaw, Vector3.up);
+        public Quaternion ShoulderRotation => Quaternion.AngleAxis(shoulderForwardYaw, Vector3.up) * Quaternion.AngleAxis(shoulderForwardRoll, Vector3.forward);
 
         public void Update(Skeleton.Pose pose, BodySettings bodySettings)
         {
@@ -23,7 +23,7 @@ namespace VRUpperBodyIK.IK
 
             PositionShoulders(pose, bodySettings);
 
-            pose.leftArm.shoulderRotation = pose.rightArm.shoulderRotation = ShoulderRotation;
+            pose.leftArm.shoulderRotation = pose.rightArm.shoulderRotation = Quaternion.AngleAxis(shoulderForwardYaw + 180, Vector3.up) * Quaternion.AngleAxis(shoulderForwardRoll, Vector3.forward);
         }
 
         public void PostUpdate(Skeleton.Pose pose, BodySettings bodySettings)
@@ -38,12 +38,21 @@ namespace VRUpperBodyIK.IK
 
             if(bodySettings.Height > 0.1f)
             {
-                float b = 0.333f;
+                float b = 1;
                 float b0 = 135.3f;
 
-                float pitch = (bodySettings.Height - pose.headPosition.y) / bodySettings.Height * (b0 + b * pose.headRotation.eulerAngles.x);
+                var up = pose.headRotation * Vector3.up;
+                var forward = pose.headRotation * Vector3.forward;
+                var horizontalForward = new Vector3(forward.x, 0, forward.z).normalized;
 
-                neckRotation = Quaternion.AngleAxis(pose.headRotation.eulerAngles.y, Vector3.up) * Quaternion.AngleAxis(pitch, Vector3.right);
+                float x = Vector3.Dot((up.y < 0 ? -1 : 1) * horizontalForward, forward);
+                float y = Vector3.Dot(Vector3.up, forward);
+
+                float headPitch = -Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+
+                float pitch = Mathf.Max(0.0f, (bodySettings.Height - pose.headPosition.y) / bodySettings.Height) * (b0 + b * headPitch);
+
+                neckRotation = Quaternion.AngleAxis(pitch, Vector3.right) * Quaternion.LookRotation(horizontalForward, Vector3.up);
             }
 
             neckPosition = pose.headPosition + neckRotation * Vector3.down * bodySettings.HeadNeckDistance;
@@ -55,7 +64,7 @@ namespace VRUpperBodyIK.IK
 
             float neckRollCorrectionRange = 22.5f;
             float neckRoll = -shoulderForwardRoll + Mathf.Clamp(Mathf.DeltaAngle(-shoulderForwardRoll, pose.headRotation.eulerAngles.z) * 0.5f, -neckRollCorrectionRange, neckRollCorrectionRange);
-            pose.neckRotation = Quaternion.AngleAxis(neckForwardAngle, Vector3.up) * Quaternion.AngleAxis(neckRoll, Vector3.forward);
+            pose.neckRotation = Quaternion.AngleAxis(neckRoll, Vector3.forward) * Quaternion.AngleAxis(neckForwardAngle, Vector3.up);
         }
 
         private void RotateNeck(Skeleton.Pose pose, Vector3 neckPosition)
@@ -72,7 +81,7 @@ namespace VRUpperBodyIK.IK
             /*Debug.DrawRay(neckPosition - Vector3.Cross(neckForwardDir, Vector3.up) * 0.5f, Vector3.Cross(neckForwardDir, Vector3.up), new Color(1.0f, 0.0f, 1.0f));
             Debug.DrawRay(neckPosition, neckForwardDir * 0.5f, new Color(1.0f, 0.0f, 1.0f));*/
 
-            neckForwardAngle = Mathf.Atan2(neckForwardDir.x, neckForwardDir.z) * Mathf.Rad2Deg;
+            neckForwardAngle = Mathf.Atan2(neckForwardDir.x, neckForwardDir.z) * Mathf.Rad2Deg + 180.0f;
 
             // TODO This isn't totally reliable yet...
 
@@ -110,7 +119,7 @@ namespace VRUpperBodyIK.IK
             Vector3 headForwardDir = pose.headRotation * Vector3.forward;
             headForwardDir = new Vector3(headForwardDir.x, 0, headForwardDir.z).normalized;
 
-            float headForwardAngle = Mathf.Atan2(headForwardDir.x, headForwardDir.z) * Mathf.Rad2Deg;
+            float headForwardAngle = Mathf.Atan2(headForwardDir.x, headForwardDir.z) * Mathf.Rad2Deg + 180.0f;
 
             float neckHeadAngleDifference = Mathf.DeltaAngle(neckForwardAngle, headForwardAngle);
 
@@ -140,16 +149,16 @@ namespace VRUpperBodyIK.IK
 
             Vector3 shoulderOffsetDir = Vector3.Cross(neckForwardDir, Vector3.up);
 
-            pose.leftArm.shoulderPosition = neckPosition - shoulderOffsetDir * bodySettings.NeckShoulderDistance;
-            pose.rightArm.shoulderPosition = neckPosition + shoulderOffsetDir * bodySettings.NeckShoulderDistance;
+            pose.leftArm.shoulderPosition = neckPosition + shoulderOffsetDir * bodySettings.NeckShoulderDistance;
+            pose.rightArm.shoulderPosition = neckPosition - shoulderOffsetDir * bodySettings.NeckShoulderDistance;
 
             ConstrainShoulderToHand(pose.leftArm, bodySettings, false);
             ConstrainShoulderToHand(pose.rightArm, bodySettings, true);
 
             shoulderOffsetDir = ShoulderRotation * Vector3.right;
 
-            pose.leftArm.shoulderPosition = neckPosition - shoulderOffsetDir * bodySettings.NeckShoulderDistance;
-            pose.rightArm.shoulderPosition = neckPosition + shoulderOffsetDir * bodySettings.NeckShoulderDistance;
+            pose.leftArm.shoulderPosition = neckPosition + shoulderOffsetDir * bodySettings.NeckShoulderDistance;
+            pose.rightArm.shoulderPosition = neckPosition - shoulderOffsetDir * bodySettings.NeckShoulderDistance;
         }
 
         private void ConstrainShoulderToHand(Arm arm, BodySettings bodySettings, bool right)

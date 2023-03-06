@@ -10,7 +10,33 @@ namespace VRUpperBodyIK.Evaluation
         private List<float> shoulderErrors = new();
         private List<float> elbowErrors = new();
 
-        private void FixedUpdate()
+        public float ShoulderError { get; private set; }
+
+        public float ElbowError { get; private set; }
+
+        public int Samples => shoulderErrors.Count;
+
+        private bool isRunning;
+
+        public void StartEvaluation()
+        {
+            ResetEvaluation();
+            isRunning = true;
+        }
+
+        public void StopEvaluation()
+        {
+            isRunning = false;
+        }
+
+        public void ResetEvaluation()
+        {
+            ShoulderError = ElbowError = 0.0f;
+            shoulderErrors.Clear();
+            elbowErrors.Clear();
+        }
+
+        public void AddSample()
         {
             var pose1 = skeleton1.CalibratedWorldPose;
             var pose2 = skeleton2.CalibratedWorldPose;
@@ -27,12 +53,19 @@ namespace VRUpperBodyIK.Evaluation
             elbowErrors.Add((leftArm1.elbowPosition - leftArm2.elbowPosition).sqrMagnitude);
             elbowErrors.Add((rightArm1.elbowPosition - rightArm2.elbowPosition).sqrMagnitude);
 
-            Debug.Log("--- RMSE (cm) ----");
-            Debug.Log("shoulder: " + RMSE(shoulderErrors) * 100.0f);
-            Debug.Log("elbow: " + RMSE(elbowErrors) * 100.0f);
+            ShoulderError = RMSE(shoulderErrors);
+            ElbowError = RMSE(elbowErrors);
         }
 
-        private double RMSE(List<float> errors)
+        private void FixedUpdate()
+        {
+            if (isRunning)
+            {
+                AddSample();
+            }
+        }
+
+        private float RMSE(List<float> errors)
         {
             if (errors.Count == 0)
             {
